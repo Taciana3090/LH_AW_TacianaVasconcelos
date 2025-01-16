@@ -1,0 +1,134 @@
+version: 1
+default_environment: dev
+project_id: 5237cc6c-baf0-4c8c-afd0-a8e56689b0df
+environments:
+- name: dev
+- name: staging
+- name: prod
+
+# configuração dos plugins de extração, carregamento e transformação
+plugins:
+  extractors:
+  - name: tap-postgres
+    variant: meltanolabs
+    pip_url: git+https://github.com/MeltanoLabs/tap-postgres.git
+    config:
+      batch_size: 100000    
+      database: $TAP_POSTGRES_DATABASE
+      host: $TAP_POSTGRES_HOST
+      port: $TAP_POSTGRES_PORT
+      user: $TAP_POSTGRES_USER
+      password: $TAP_POSTGRES_PASSWORD
+      replication_method: FULL_TABLE   
+    select:
+    - humanresources-department.*
+    - humanresources-employee.*
+    - humanresources-employeedepartmenthistory.*
+    - humanresources-employeepayhistory.*
+    - humanresources-jobcandidate.*
+    - humanresources-shift.*
+    - person-address.*
+    - person-addresstype.*
+    - person-businessentity.*
+    - person-businessentityaddress.*
+    - person-businessentitycontact.*
+    - person-contacttype.*
+    - person-countryregion.*
+    - person-emailaddress.*
+    - person-password.*
+    - person-person.*
+    - person-personphone.*
+    - person-phonenumbertype.*
+    - person_stateprovince.*
+    - production-billofmaterials.*
+    - production-culture.*
+    - production-document.*
+    - production-illustration.*
+    - production-location.*
+    - production-product.*
+    - production-productcategory.*
+    - production-productcosthistory.*
+    - production-productdescription.*
+    - production-productdocument.*
+    - production-productinventory.*
+    - production-productlistpricehistory.*
+    - production-productmodel.*
+    - production-productmodelillustration.*
+    - production-productmodelproductdescriptionculture.*
+    - production-productphoto.*
+    - production-productproductphoto.*
+    - production-productreview.*
+    - production-productsubcategory.*
+    - production-scrapreason.*
+    - production-transactionhistory.*
+    - production-transactionhistoryarchive.*
+    - production-unitmeasure.*
+    - production-workorder.*
+    - production-workorderrouting.*
+    - purchasing-productvendor.*
+    - purchasing-purchaseorderdetail.*
+    - purchasing-purchaseorderheader.*
+    - purchasing-shipmethod.*
+    - purchasing-vendor.*
+    - sales-countryregioncurrency.*
+    - sales-creditcard.*
+    - sales-currency.*
+    - sales-currencyrate.*
+    - sales-customer.*
+    - sales-personcreditcard.*
+    - sales-salesorderdetail.*
+    - sales-salesorderheader.*
+    - sales-salesorderheadersalesreason.*
+    - sales-salesperson.*
+    - sales-salespersonquotahistory.*
+    - sales-salesreason.*
+    - sales-salestaxrate.*
+    - sales-salesterritory.*
+    - sales-salesterritoryhistory.*
+    - sales-shoppingcartitem.*
+    - sales-specialoffer.*
+    - sales-specialofferproduct.*
+    - sales-store.*
+
+  loaders:
+  - name: target-snowflake
+    variant: meltanolabs
+    pip_url: meltanolabs-target-snowflake
+    config:
+      account: $TARGET_SNOWFLAKE_ACCOUNT
+      database: $TARGET_SNOWFLAKE_DATABASE
+      schema: adventureworks
+      password: $TARGET_SNOWFLAKE_PASSWORD
+      role: $TARGET_SNOWFLAKE_ROLE
+      user: $TARGET_SNOWFLAKE_USER
+      warehouse: $TARGET_SNOWFLAKE_WAREHOUSE
+      batch_size_rows: 100000    
+      add_metadata_columns: true   
+      staging_storage_integration:    
+      remove_temp_files: true   
+      log_level: debug   
+      timestamp_column_name: _loaded_at   
+      loading_method: upsert
+
+  transformers:
+  - name: dbt
+    variant: dbt-labs
+    pip_url: dbt-core~=1.3.0 dbt-postgres~=1.3.0 dbt-redshift~=1.3.0 dbt-snowflake~=1.3.0
+      dbt-bigquery~=1.3.0
+    config:
+        project_dir: ./transform  # onde estão os modelos dbt
+        profiles_dir: ./transform/profiles  # diretório - perfil do dbt
+        target: snowflake
+        profiles:
+          dev:
+            target: snowflake
+            outputs:
+              dev:
+                type: snowflake
+                account: "{{ env_var('DBT_SF_DB_ACCOUNT') }}"
+                user: "{{ env_var('DBT_SF_DEV_USER') }}"
+                password: "{{ env_var('DBT_SF_DEV_PASSWORD') }}"
+                role: "{{ env_var('DBT_SF_DEV_ROLE') }}"
+                database: "{{ env_var('DBT_SF_DEV_DATABASE') }}"
+                warehouse: "{{ env_var('DBT_SF_DEV_WAREHOUSE') }}"
+                schema: "{{ env_var('DBT_DEV_SCHEMA') }}"

@@ -1,0 +1,312 @@
+version: 2
+
+models:
+  - name: stg_aw__countryregion
+    description: "This model standardizes the countryregion data, and adds a new primary key."
+    columns:
+      - name: countryregion_code
+        description: "Country/region code, previously the primary key."
+        tests:
+          - unique
+          - not_null
+      - name: country_name
+        description: "Name of the country or region."
+        tests:
+          - unique
+          - not_null
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__emailaddress
+    description: "this model standardizes the emailaddress data, normalizes emails, and applies snake_case naming conventions."
+    columns:
+      - name: email_address_id
+        description: "part of the composite primary key for the email address, converted to int."
+        tests:
+          - not_null
+      - name: business_entity_id
+        description: "part of the composite primary key and foreign key referencing the business entity in the stg_aw_person table, converted to int."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_aw__person')
+              field: business_entity_id
+      - name: email_address
+        description: "normalized email address, converted to lowercase and without accents."
+        tests:
+          - not_null
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__addresstype
+    description: "this model standardizes the address_type data, renames columns to snake_case, and enforces primary key and unique constraints."
+    columns:
+      - name: address_type_id
+        description: "primary key for the address type, converted to int."
+        tests:
+          - unique
+          - not_null
+      - name: address_type_name
+        description: "Address type description. For example, Billing, Home, or Shipping."
+        tests:
+          - unique
+          - not_null
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__businessentity
+    description: "this model standardizes the businessentity data and enforces primary key and unique constraints."
+    columns:
+      - name: business_entity_id
+        description: "primary key for the business entity, converted to int."
+        tests:
+          - unique
+          - not_null
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__businessentityaddress
+    description: "this model standardizes the businessentityaddress data, renames columns to snake_case, and enforces composite primary key and foreign key constraints."
+    columns:
+      - name: address_id
+        description: "part of the composite primary key for the business entity address and foreign key referencing the address."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_aw__address')
+              field: address_id
+      - name: business_entity_id
+        description: "part of the composite primary key for the business entity address and foreign key referencing the business entity."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_aw__businessentity')
+              field: business_entity_id
+      - name: address_type_id
+        description: "foreign key referencing the address type."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_aw__addresstype')
+              field: address_type_id
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__stateprovince
+    description: "this model standardizes the stateprovince data, replaces countryregion_code with country_region_id, and enforces primary key and foreign key constraints."
+    columns:
+      - name: state_province_id
+        description: "primary key for the state province, converted to int."
+        tests:
+          - unique
+          - not_null
+      - name: state_province_code
+        description: "code for the state province, part of a unique index."
+        tests:
+          - not_null
+      - name: is_only_state_province_flag
+        description: "0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode."
+        tests:
+          - not_null
+      - name: state_province_name
+        description: "name of the state province."
+        tests:
+          - not_null
+          - unique
+      - name: territory_id
+        description: "foreign key referencing the sales territory."
+
+
+  - name: stg_aw__address
+    description: "This model standardizes the address data, adds country_region_id, extracts and cleans address components,
+                  removes the city column, and fills null postal code using spatiallocation field."
+    columns:
+      - name: address_id
+        description: "Primary key for the address, converted to int."
+        tests:
+          - unique
+          - not_null
+      - name: state_province_id
+        description: "Foreign key referencing the state province."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_aw__stateprovince')
+              field: state_province_id
+      - name: city
+        description: "Foreign key referencing the city/district."
+      - name: address_number
+        description: "House/building number extracted from address line 1."
+
+      - name: address_line
+        description: "Street name, cleaned from address line 1."
+        tests:
+          - not_null
+      - name: address_complement
+        description: "Address complement, cleaned from address line 2."
+      - name: postal_code
+        description: "Postal code for the address."
+        tests:
+          - not_null
+      - name: spatial_location
+        description: "Latitude and longitude of this address."
+
+  - name: stg_aw__person
+    description: "This model standardizes the person data, formats names with capitalized first letters, modifies title values, replaces '[NULL]' with null."
+    columns:
+      - name: business_entity_id
+        description: "Foreign key referencing the business entity, also a part of the composite primary key."
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('stg_aw__businessentity')
+              field: business_entity_id
+      - name: first_name
+        description: "Person's first name with the first letter capitalized."
+        tests:
+          - not_null
+      - name: middle_name
+        description: "Person's middle name with the first letter capitalized."
+      - name: last_name
+        description: "Person's last name with the first letter capitalized."
+        tests:
+          - not_null
+      - name: name_title
+        description: "Person's title, with 'Sra%' converted to 'Mrs' and 'Sr%' converted to 'Mr'."
+      - name: email_promotion
+        description: "Indicator for email promotions, converted to an integer."
+        tests:
+          - not_null
+      - name: person_type
+        description: "Type of the person."
+        tests:
+          - not_null
+      - name: name_suffix
+        description: "Surname suffix. For example, Sr. or Jr."
+      - name: additional_contact_info
+        description: "Additional contact information for the person, with '[NULL]' replaced by null."
+      - name: demographics
+        description: "Demographic information for the person, with '[NULL]' replaced by null."

@@ -1,0 +1,57 @@
+version: 2
+
+models:
+  - name: stg_aw__shipmethod
+    description: >
+      This model standardizes the ship method data, ensuring data consistency and 
+      enforcing the foreign key constraint on ship_method_id, which is also the primary key.
+    columns:
+      - name: ship_method_id
+        description: >
+          Primary key for ShipMethod records.
+        tests:
+          - unique
+          - not_null
+      - name: name_method
+        description: >
+          Shipping company name.
+        tests:
+          - unique
+          - not_null
+      - name: ship_base
+        description: >
+          Minimum shipping charge.
+        tests:
+          - not_null
+      - name: ship_rate
+        description: >
+          Shipping charge per pound.
+        tests:
+          - not_null
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.

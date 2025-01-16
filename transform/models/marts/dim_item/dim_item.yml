@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: dim_item
+    description: >
+      Dimensional model for products that consolidates data from sales order details 
+      and product attributes. Provides a comprehensive view of product-related information 
+      for analytical purposes.
+    columns:
+      - name: product_sk
+        description: >
+          Surrogate key generated for the product, combining information from sales order 
+          details and product attributes.
+        tests:
+          - not_null
+          - unique
+      - name: product_id
+        description: >
+          Unique identifier for the product from the source system.
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('int_product')
+              field: product_id
+      - name: product_name
+        description: >
+          Name of the product as defined in the source system.
+      - name: standard_cost
+        description: >
+          Standard cost of the product, used for cost analysis.
+      - name: listprice
+        description: >
+          List price of the product, used for sales and revenue analysis.
+      - name: name_product_subcategory
+        description: >
+          Subcategory name of the product, providing additional classification.
+      - name: name_product_category
+        description: >
+          Category name of the product, used for higher-level classification.

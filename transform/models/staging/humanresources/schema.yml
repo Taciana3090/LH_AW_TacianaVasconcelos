@@ -1,0 +1,46 @@
+version: 2
+models:
+  - name: stg_aw__employee
+    description: >
+       This staging model contains employee information from Adventure Works database,
+       including personal details, job information and audit fields.
+    columns:
+      - name: business_entity_id
+        description: >
+          Primary key - Unique identifier that links employee records to the person table.
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('stg_aw__person')
+              field: business_entity_id
+      - name: job_title
+        description: >
+          Job title of the employee.
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.

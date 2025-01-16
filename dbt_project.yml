@@ -1,0 +1,32 @@
+name: adventureworks
+version: '1.0'
+profile: meltano
+config-version: 2
+require-dbt-version: [">=1.0.0", "<2.0.0"]
+
+model-paths: ["transform/models"]
+analysis-paths: ["transform/analyses"]
+test-paths: ["transform/tests"]
+seed-paths: ["transform/seeds"]
+macro-paths: ["transform/macros"]
+snapshot-paths: ["transform/snapshots"]
+
+# log-path: transform/logs
+packages-install-path: transform/dbt_packages
+
+clean-targets:
+  - transform/target
+  - transform/dbt_packages
+  - transform/logs
+
+models:
+  adventureworks:
+    marts:
+      +materialized: table
+
+    intermediate:
+      +materialized: table
+      
+    staging:
+      +materialized: view
+

@@ -1,0 +1,18 @@
+meltano:
+  target: snowflake
+  outputs:
+    snowflake:
+      type: snowflake
+      threads: 2
+      account: "{{ env_var('DBT_SF_DB_ACCOUNT') }}"
+      user: "{{ env_var('DBT_SF_DEV_USER') }}"
+      password: "{{ env_var('DBT_SF_DEV_PASSWORD') }}"
+      role: "{{ env_var('DBT_SF_DEV_ROLE') }}"
+      database: "{{ env_var('DBT_SF_DEV_DATABASE') }}"
+      warehouse: "{{ env_var('DBT_SF_DEV_WAREHOUSE') }}"
+      schema: "{{ env_var('DBT_DEV_SCHEMA') }}"
+      client_session_keep_alive: True
+      connect_retries: 0
+      connect_timeout: 10
+      retry_on_database_errors: False
+      retry_all: False

@@ -1,0 +1,84 @@
+# Byte-compiled Python files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Virtual environments
+.env/
+.venv/
+env/
+venv/
+
+# Meltano related
+.meltano/
+logs/
+.env  # Environment variable files, do not track sensitive data
+
+# Data files and outputs
+*.db
+*.sqlite
+*.sqlite3
+*.csv
+*.parquet
+*.json
+*.tsv
+output/
+
+# Secret keys and credentials
+secrets/
+*.key
+*.pem
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Pytest and testing
+*.pytest_cache/
+.cache/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# PyCharm IDE
+.idea/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Other IDEs and editors
+*.sublime-workspace
+*.sublime-project
+*.swp
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Logs and temp files
+*.log
+*.temp
+*.tmp
+
+# Docker
+*.env.docker
+docker-compose.override.yml
+
+# Packages and dependencies
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl

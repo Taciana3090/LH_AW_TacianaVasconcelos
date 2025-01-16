@@ -1,0 +1,59 @@
+version: 2
+sources:
+  - name: db_aw_humanresources
+    database: RAW_AW
+    schema: humanresources
+    tables:
+      - name: employee
+
+  - name: db_aw_person
+    database: RAW_AW
+    schema: person
+    tables:
+      - name: address
+      - name: addresstype
+      - name: businessentity
+      - name: businessentityaddress
+      - name: businessentitycontact
+      - name: contacttype
+      - name: countryregion
+      - name: emailaddress
+      - name: person
+      - name: stateprovince
+
+  - name: db_aw_production
+    database: RAW_AW
+    schema: production
+    tables:
+      - name: product
+      - name: productcategory
+      - name: productmodel
+      - name: productsubcategory
+      - name: unitmeasure
+
+  - name: db_aw_purchasing
+    database: RAW_AW
+    schema: purchasing
+    tables:
+      - name: shipmethod
+
+  - name: db_aw_sales
+    database: RAW_AW
+    schema: sales
+    tables:
+      - name: creditcard
+      - name: currency
+      - name: currencyrate
+      - name: customer
+      - name: salesorderdetail
+      - name: salesorderheader
+      - name: salesorderheadersalesreason
+      - name: salesperson
+      - name: salespersonquotahistory
+      - name: salesreason
+      - name: salesterritory
+      - name: specialoffer
+      - name: store
+      - name: specialofferproduct
+
+  

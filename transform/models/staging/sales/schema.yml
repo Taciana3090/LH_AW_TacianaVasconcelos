@@ -1,0 +1,425 @@
+version: 2
+models:
+  - name: stg_aw__store
+    description: >
+      Standardizes the store data, ensuring consistency and validating key constraints, 
+      such as unique identifiers and relationships with business entities.
+    columns:
+      - name: business_entity_id
+        description: >
+          Primary key. Foreign key to businessentity.businessentityid.
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('stg_aw__businessentity')
+              field: business_entity_id
+      - name: sales_person_id
+        description: >
+          Foreign key to salesperson.salespersonid.
+        tests:
+          - not_null
+      - name: store_name
+        description: >
+          Name of the store.
+        tests:
+          - not_null
+      - name: demographics
+        description: >
+          Demographic details about the store.
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__customer
+    description: >
+      Standardizes the customer data, ensuring consistency and validating key constraints, 
+      such as unique identifiers and relationships with stores and sales territories.
+    columns:
+      - name: customer_id
+        description: >
+          Unique identifier for each customer.
+        tests:
+          - unique
+          - not_null
+      - name: person_id
+        description: >
+          Foreign key to person.personid.
+      - name: store_id
+        description: >
+          Foreign key to store.storeid.
+      - name: territory_id
+        description: >
+          Foreign key to salesterritory.salesterritoryid.
+        tests:
+          - relationships:
+              to: ref('stg_aw__salesterritory')
+              field: territory_id
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__salespersonquotahistory
+    description: >
+      Standardizes the sales person quota history data, ensuring consistency and validating key 
+      constraints and relationships.
+    columns:
+      - name: business_entity_id
+        description: >
+          Foreign key to salesperson.businessentityid.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_aw__salesperson')
+              field: business_entity_id
+      - name: quota_date
+        description: >
+          The date when the sales quota was set.
+        tests:
+          - not_null
+      - name: sales_quota
+        description: >
+          The sales quota amount.
+        tests:
+          - not_null
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__salesperson
+    description: >
+      Standardizes the sales person data, ensuring consistency and validating key constraints 
+      such as relationships to employees and sales territories.
+    columns:
+      - name: business_entity_id
+        description: >
+          Foreign key to employee.businessentityid.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_aw__employee')
+              field: business_entity_id
+      - name: territory_id
+        description: >
+          Foreign key to salesterritory.territoryid.
+        tests:
+          - relationships:
+              to: ref('stg_aw_sales_territory')
+              field: territory_id
+      - name: sales_quota
+        description: >
+          Projected yearly sales quota.
+      - name: bonus
+        description: >
+          Bonus due if quota is met.
+        tests:
+          - not_null
+      - name: commission_pct
+        description: >
+          Commission percentage per sale.
+        tests:
+          - not_null
+      - name: sales_year_to_end
+        description: >
+          Year-to-date sales.
+      - name: sales_last_year
+        description: >
+          Sales total from the previous year.
+        tests:
+          - not_null
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__salesterritory
+    description: >
+      Standardizes the sales territory data, ensuring consistency and validating key constraints 
+      such as relationships with states and territories.
+    columns:
+      - name: territory_id
+        description: >
+          Unique identifier for each sales territory.
+        tests:
+          - unique
+          - not_null
+      - name: territory_name
+        description: >
+          Name of the sales territory.
+        tests:
+          - not_null
+          - unique
+      - name: countryregion_code
+        description: >
+          Foreign key to stateprovince.countryregionid.
+        tests:
+          - not_null
+      - name: territory_group
+        description: >
+          Group associated with the sales territory.
+        tests:
+          - not_null
+      - name: sales_year_to_end
+        description: >
+          Year-to-date sales total.
+      - name: sales_last_year
+        description: >
+          Sales total from the previous year.
+        tests:
+          - not_null
+      - name: cost_year_to_end
+        description: >
+          Year-to-date cost.
+        tests:
+          - not_null
+      - name: cost_last_year
+        description: >
+          Cost total from the previous year.
+        tests:
+          - not_null
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__specialoffer
+    description: >
+      Standardizes the special offer data, ensuring consistency and validating key constraints 
+      such as discounts and offer validity.
+    columns:
+      - name: special_offer_id
+        description: >
+          Unique identifier for each special offer.
+        tests:
+          - unique
+          - not_null
+      - name: description_discount
+        description: >
+          Description of the special offer.
+        tests:
+          - not_null
+      - name: discount_pct
+        description: >
+          Discount percentage applied to the special offer.
+        tests:
+          - not_null
+      - name: type_discount
+        description: >
+          Type/category of the special offer.
+        tests:
+          - not_null
+      - name: category
+        description: >
+          Category of the special offer.
+        tests:
+          - not_null
+      - name: start_date
+        description: >
+          Start date of the special offer.
+        tests:
+          - not_null
+      - name: end_date
+        description: >
+          End date of the special offer.
+      - name: min_quantity
+        description: >
+          Minimum quantity required for the special offer.
+        tests:
+          - not_null
+      - name: max_quantity
+        description: >
+          Maximum quantity allowed for the special offer.
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__specialofferproduct
+    description: >
+      Standardizes the special offer product data, ensuring consistency and validating key 
+      constraints such as relationships to offers and products.
+    columns:
+      - name: special_offer_id
+        description: >
+          Foreign key to specialoffer.specialofferid.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_aw__specialoffer')
+              field: special_offer_id
+      - name: product_id
+        description: >
+          Foreign key to product.productid.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_aw__product')
+              field: product_id
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.

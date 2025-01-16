@@ -1,0 +1,94 @@
+version: 2
+
+models:
+  - name: fct_salesorderheader
+    description: >
+      Fact table for sales order headers, integrating details from dimensions such as client, location, 
+      credit card, and sales order details. Provides a consolidated view of sales orders for analysis.
+    columns:
+      - name: salesorderheader_sk
+        description: >
+          Surrogate key for the sales order header, generated from the sales_order_id.
+        tests:
+          - not_null
+          - unique
+      - name: customer_fk
+        description: >
+          Foreign key linking to the customer in the client dimension.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_client')
+              field: customer_sk
+      - name: shiptoaddress_fk
+        description: >
+          Foreign key linking to the shipping address in the location dimension.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_location')
+              field: shiptoaddress_sk
+      - name: creditcard_fk
+        description: >
+          Foreign key linking to the credit card in the credit card dimension.
+        tests:
+          - relationships:
+              to: ref('dim_creditcard')
+              field: creditcard_sk
+      - name: salesorder_fk
+        description: >
+          Foreign key linking to the sales order details dimension.
+        tests:
+          - relationships:
+              to: ref('dim_salesorderheaderdetail')
+              field: sales_order_id
+      - name: sales_order_id
+        description: >
+          Original identifier for the sales order from the staging table.
+        tests:
+          - not_null
+          - unique
+      - name: order_date
+        description: >
+          Date when the sales order was created.
+        tests:
+          - not_null
+      - name: ship_date
+        description: >
+          Date when the sales order was shipped to the customer.
+      - name: status
+        description: >
+          Status of the sales order, mapped from numerical codes to descriptive names 
+          (e.g., 'In_process', 'Shipped').
+      - name: customer_id
+        description: >
+          Original identifier for the customer associated with the sales order.
+      - name: sales_person_id
+        description: >
+          Identifier for the salesperson who managed the sales order.
+      - name: bill_to_address_id
+        description: >
+          Identifier for the billing address associated with the sales order.
+      - name: ship_to_address_id
+        description: >
+          Identifier for the shipping address associated with the sales order.
+      - name: ship_method_id
+        description: >
+          Identifier for the shipping method used for the sales order.
+      - name: credit_card_id
+        description: >
+          Original identifier for the credit card used for the sales order.
+      - name: sub_total
+        description: >
+          Subtotal amount for the sales order, before taxes and other charges.
+      - name: taxa_amount
+        description: >
+          Total tax amount applied to the sales order.
+      - name: freight
+        description: >
+          Freight or shipping cost associated with the sales order.
+      - name: total_due
+        description: >
+          Total amount due for the sales order, including all charges and taxes.
+        tests:
+          - not_null

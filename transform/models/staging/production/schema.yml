@@ -1,0 +1,319 @@
+version: 2
+
+models:
+  - name: stg_aw__unitmeasure
+    description: >
+      This model standardizes the unit measure data, creating a new unique identifier unit_measure_code and ensuring data consistency by validating the uniqueness and non-null constraint on unit_measure_code.
+    columns:
+      - name: unit_measure_code
+        description: >
+          Code that identifies the unit of measure. This field must be unique and not null.
+        tests:
+          - unique
+          - not_null
+      - name: unit_measure_name
+        description: >
+          Name of the unit of measure.
+        tests:
+          - not_null
+          - unique
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__productsubcategory
+    description: >
+      This model standardizes the product subcategory data, ensuring data consistency and validating key constraints and uniqueness of product_subcategory_name.
+    columns:
+      - name: product_subcategory_id
+        description: >
+          Primary key for product subcategory records.
+        tests:
+          - unique
+          - not_null
+      - name: product_category_id
+        description: >
+          Product category identification number associated with the subcategory.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_aw__productcategory')
+              field: product_category_id
+      - name: name_product_subcategory
+        description: >
+          Subcategory description.
+        tests:
+          - not_null
+          - unique
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__productcategory
+    description: >
+      This model standardizes the product category data, ensuring data consistency and validating key constraints and uniqueness of product_name.
+    columns:
+      - name: product_category_id
+        description: >
+          Primary key for product category records.
+        tests:
+          - unique
+          - not_null
+      - name: name_product_category
+        description: >
+          Category description.
+        tests:
+          - not_null
+          - unique
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__productmodel
+    description: >
+      This model standardizes the product model data, ensuring data consistency and validating key constraints.
+    columns:
+      - name: product_model_id
+        description: >
+          Primary key for the product model records.
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: >
+          Product model description.
+        tests:
+          - unique
+          - not_null
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.
+
+  - name: stg_aw__product
+    description: >
+      This model standardizes the product data, ensuring data consistency and validating key constraints, date integrity, and value correctness.
+    columns:
+      - name: product_id
+        description: >
+          Primary key for Product records.
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: >
+          Name of the product.
+        tests:
+          - not_null
+          - unique
+      - name: product_number
+        description: >
+          Unique product identification number.
+        tests:
+          - unique
+          - not_null
+      - name: make_flag
+        description: >
+          Indicates if the product is manufactured in-house ('true') or purchased ('false').
+      - name: finished_goods_flag
+        description: >
+          Indicates if the product is salable ('true') or not ('false').
+      - name: color
+        description: >
+          Product color.
+      - name: safety_stock_level
+        description: >
+          Minimum inventory quantity.
+        tests:
+          - not_null
+      - name: reorder_point
+        description: >
+          Inventory level that triggers a purchase order or work order.
+        tests:
+          - not_null
+      - name: standard_cost
+        description: >
+          Standard cost of the product.
+        tests:
+          - not_null
+      - name: listprice
+        description: >
+          Selling price.
+      - name: size
+        description: >
+          Product size.
+      - name: size_unit_measure_code
+        description: >
+          Reference to the unit measure for the size of the product. Foreign key to stg_aw_unit_measure.unit_measure_code.
+        tests:
+          - relationships:
+              to: ref('stg_aw__unitmeasure')
+              field: unit_measure_code
+      - name: weight_unit_measure_code
+        description: >
+          Reference to the unit measure for the weight of the product. Foreign key to stg_aw_unit_measure.unit_measure_code
+        tests:
+          - relationships:
+              to: ref('stg_aw__unitmeasure')
+              field: unit_measure_code
+      - name: weight
+        description: >
+          Product weight.
+      - name: days_to_manufacture
+        description: >
+          Number of days required to manufacture the product.
+        tests:
+          - not_null
+      - name: product_line
+        description: >
+          Product line code (e.g., R = Road, M = Mountain, T = Touring, S = Standard).
+      - name: class
+        description: >
+          Class code of the product (e.g., H = High, M = Medium, L = Low).
+      - name: style
+        description: >
+          Style code of the product (e.g., W = Womens, M = Mens, U = Universal).
+      - name: product_subcategory_id
+        description: >
+          Product is a member of this product subcategory. Foreign key to ProductSubcategory.
+        tests:
+          - relationships:
+              to: ref('stg_aw__productsubcategory')
+              field: product_subcategory_id
+      - name: product_model_id
+        description: >
+          Product is a member of this product model. Foreign key to ProductModel.
+        tests:
+          - relationships:
+              to: ref('stg_aw__productmodel')
+              field: product_model_id
+      - name: sell_start_date
+        description: >
+          Date the product was available for sale.
+        tests:
+          - not_null
+      - name: sell_end_date
+        description: >
+          Date the product was no longer available for sale.
+      - name: discontinued_date
+        description: >
+          Date the product was discontinued.
+      - name: rowguid
+        description: >
+          Unique identifier for each record.
+      - name: modified_date
+        description: >
+          The date the record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Extraction timestamp from the source system.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the data was received.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the batch was processed.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the data was marked for deletion.
+      - name: _sdc_sequence
+        description: >
+          Sequence number for data extraction.
+      - name: _sdc_table_version
+        description: >
+          Version of the source table.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp when synchronization started.

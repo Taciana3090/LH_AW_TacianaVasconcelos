@@ -1,0 +1,25 @@
+
+    
+    
+
+with child as (
+    select business_entity_id as from_field
+    from SANDBOX.DEV_TACIANA_VASCONCELOS.stg_aw__businessentityaddress
+    where business_entity_id is not null
+),
+
+parent as (
+    select business_entity_id as to_field
+    from SANDBOX.DEV_TACIANA_VASCONCELOS.stg_aw__businessentity
+)
+
+select
+    from_field
+
+from child
+left join parent
+    on child.from_field = parent.to_field
+
+where parent.to_field is null
+
+

@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: fct_salesorderdetail
+    description: >
+      Fact table for sales order details, consolidating information about products,
+      order quantities, pricing, and discounts. This table integrates with dimension
+      tables for items and sales order headers to enable detailed sales analysis.
+    columns:
+      - name: salesorderdetail_sk
+        description: >
+          Surrogate key for the sales order detail fact table, generated from 
+          `sales_order_detail_id` in `dim_salesorderheaderdetail` and `int_salesorderdetail`.
+        tests:
+          - not_null
+          - unique
+      - name: product_fk
+        description: >
+          Foreign key referencing the product in the item dimension table (`dim_item`).
+        tests:
+          - not_null
+      - name: salesorderdetail_fk
+        description: >
+          Foreign key referencing the sales order detail in the sales order header 
+          dimension table (`dim_salesorderheaderdetail`).
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_salesorderheaderdetail')
+              field: sales_order_detail_id
+      - name: product_id
+        description: >
+          Original product identifier from the transactional data.
+        tests:
+          - not_null
+      - name: sales_order_detail_id
+        description: >
+          Original sales order detail identifier from the transactional data.
+        tests:
+          - not_null
+      - name: order_quantity
+        description: >
+          Quantity of the product ordered in the sales order detail.
+      - name: unit_price
+        description: >
+          Price per unit of the product for the sales order detail.
+      - name: unit_price_discount
+        description: >
+          Discount applied to the unit price of the product in the sales order detail.
+      - name: grossrevenue
+        description: >
+          Gross revenue generated for the sales order detail, calculated as 
+          `order_quantity * unit_price`.
+      - name: discount
+        description: >
+          Total discount applied for the sales order detail, calculated as 
+          `order_quantity * unit_price * unit_price_discount`.
+
