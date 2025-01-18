@@ -23,8 +23,7 @@ with
 	, dim_location as (
 		select
 			{{ dbt_utils.generate_surrogate_key (
-				['stg_aw__salesorderheader.ship_to_address_id'
-				, 'int_location.address_id']
+				['int_location.address_id']
 			) }} as shiptoaddress_sk
 			, address_id as ship_to_address_id
 			, int_location.address_line
@@ -32,8 +31,10 @@ with
 			, int_location.postal_code 
 			, int_location.state_province_name
 			, int_location.country_name
+			, row_number () over (partition by address_id order by address_id) as row_number
 		from stg_aw__salesorderheader
 		left join int_location on stg_aw__salesorderheader.ship_to_address_id = int_location.address_id
+		qualify row_number = 1
 	)
 
 select *

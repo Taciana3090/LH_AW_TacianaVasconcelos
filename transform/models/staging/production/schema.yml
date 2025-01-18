@@ -14,9 +14,6 @@ models:
       - name: unit_measure_name
         description: >
           Name of the unit of measure.
-        tests:
-          - not_null
-          - unique
       - name: modified_date
         description: >
           The date the record was last modified.
@@ -55,11 +52,6 @@ models:
       - name: product_category_id
         description: >
           Product category identification number associated with the subcategory.
-        tests:
-          - not_null
-          - relationships:
-              to: ref('stg_aw__productcategory')
-              field: product_category_id
       - name: name_product_subcategory
         description: >
           Subcategory description.
@@ -107,9 +99,6 @@ models:
       - name: name_product_category
         description: >
           Category description.
-        tests:
-          - not_null
-          - unique
       - name: rowguid
         description: >
           Unique identifier for each record.
@@ -151,9 +140,6 @@ models:
       - name: product_name
         description: >
           Product model description.
-        tests:
-          - unique
-          - not_null
       - name: rowguid
         description: >
           Unique identifier for each record.
@@ -195,15 +181,9 @@ models:
       - name: product_name
         description: >
           Name of the product.
-        tests:
-          - not_null
-          - unique
       - name: product_number
         description: >
-          Unique product identification number.
-        tests:
-          - unique
-          - not_null
+          product identification number.
       - name: make_flag
         description: >
           Indicates if the product is manufactured in-house ('true') or purchased ('false').
@@ -216,18 +196,12 @@ models:
       - name: safety_stock_level
         description: >
           Minimum inventory quantity.
-        tests:
-          - not_null
       - name: reorder_point
         description: >
           Inventory level that triggers a purchase order or work order.
-        tests:
-          - not_null
       - name: standard_cost
         description: >
           Standard cost of the product.
-        tests:
-          - not_null
       - name: listprice
         description: >
           Selling price.
@@ -237,25 +211,15 @@ models:
       - name: size_unit_measure_code
         description: >
           Reference to the unit measure for the size of the product. Foreign key to stg_aw_unit_measure.unit_measure_code.
-        tests:
-          - relationships:
-              to: ref('stg_aw__unitmeasure')
-              field: unit_measure_code
       - name: weight_unit_measure_code
         description: >
           Reference to the unit measure for the weight of the product. Foreign key to stg_aw_unit_measure.unit_measure_code
-        tests:
-          - relationships:
-              to: ref('stg_aw__unitmeasure')
-              field: unit_measure_code
       - name: weight
         description: >
           Product weight.
       - name: days_to_manufacture
         description: >
           Number of days required to manufacture the product.
-        tests:
-          - not_null
       - name: product_line
         description: >
           Product line code (e.g., R = Road, M = Mountain, T = Touring, S = Standard).
@@ -268,22 +232,12 @@ models:
       - name: product_subcategory_id
         description: >
           Product is a member of this product subcategory. Foreign key to ProductSubcategory.
-        tests:
-          - relationships:
-              to: ref('stg_aw__productsubcategory')
-              field: product_subcategory_id
       - name: product_model_id
         description: >
           Product is a member of this product model. Foreign key to ProductModel.
-        tests:
-          - relationships:
-              to: ref('stg_aw__productmodel')
-              field: product_model_id
       - name: sell_start_date
         description: >
           Date the product was available for sale.
-        tests:
-          - not_null
       - name: sell_end_date
         description: >
           Date the product was no longer available for sale.

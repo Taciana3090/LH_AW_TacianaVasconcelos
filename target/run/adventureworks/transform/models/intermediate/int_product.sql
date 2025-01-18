@@ -37,10 +37,11 @@
             p.product_id 
             , p.product_name
             , p.product_number 
-            , p.color 
+            , coalesce(p.color, 'not informed') as color
             , p.standard_cost 
-            , p.listprice 
-            , ps.name_product_subcategory
+            , p.listprice
+            , coalesce(ps.product_subcategory_id, 0) product_subcategory_id
+            , coalesce( ps.name_product_subcategory, 'not informed') as name_product_subcategory
             , pc.name_product_category
         from product p
         left join productsubcategory ps on p.product_subcategory_id = ps.product_subcategory_id

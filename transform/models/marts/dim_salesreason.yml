@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: dim_salesreason
+    description: >
+      This model aggregates sales reasons associated with each sales order, 
+      providing a consolidated view of reason names and types.
+    columns:
+      - name: reason_sk
+        description: >
+          Surrogate key generated for the sales reason, used for joining with other dimensional tables.
+        tests:
+          - unique
+          - not_null
+      - name: sales_order_id
+        description: >
+          Unique identifier for the sales order associated with the sales reasons.
+        tests:
+          - unique
+      - name: reason_name
+        description: >
+          Aggregated list of reason names associated with a particular sales order, 
+          separated by commas.
+      - name: reason_type
+        description: >
+          Type or category of the sales reason, giving context to the reason for a sales event.
+      - name: row_number
+        description: >
+          Row number used to deduplicate records, ensuring only the top-ranked row is retained 
+          based on the reason type.

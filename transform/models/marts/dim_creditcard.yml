@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: dim_creditcard
+    description: >
+      This model contains information about credit card transactions. It includes 
+      the sales order ID, customer ID, sales person ID, credit card ID, card type, 
+      and the expiration date of the credit card. It generates a surrogate key for 
+      the credit card using a combination of credit card IDs from both sales orders 
+      and the credit card details tables. Only the first row per credit card is selected.
+      
+    columns:
+      - name: creditcard_sk
+        description: >
+          The surrogate key generated for the credit card. It uniquely identifies 
+          each credit card transaction in the model.
+        tests:
+         - unique
+         - not_null
+      - name: sales_order_id
+        description: >
+          The unique identifier for the sales order, sourced from the 'stg_aw__salesorderheader' 
+          table. Each sales order corresponds to a customer transaction.    
+      - name: customer_id
+        description: >
+          The unique identifier of the customer associated with the sales order, 
+          sourced from the 'stg_aw__salesorderheader' table.         
+      - name: sales_person_id
+        description: >
+          The identifier for the sales person associated with the sales order. 
+          If not provided, it defaults to 0.        
+      - name: credit_card_id
+        description: >
+          The unique identifier of the credit card used in the transaction. 
+          If not provided, it defaults to 0.        
+      - name: card_type
+        description: >
+          The type of the credit card (e.g., 'Visa', 'MasterCard', etc.). 
+          If not provided, it defaults to 'other method'.       
+      - name: exp_month
+        description: >
+          The expiration month of the credit card, sourced from the 'stg_aw__creditcard' table.       
+      - name: exp_year
+        description: >
+          The expiration year of the credit card, sourced from the 'stg_aw__creditcard' table.       
+      - name: row_number
+        description: >
+          A row number generated for each credit card transaction, ordered by 
+          credit_card_id and partitioned by credit_card_id. This ensures that 
+          only one row per credit card is selected.

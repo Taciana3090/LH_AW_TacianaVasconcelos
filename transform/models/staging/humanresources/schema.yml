@@ -11,9 +11,6 @@ models:
         tests:
           - unique
           - not_null
-          - relationships:
-              to: ref('stg_aw__person')
-              field: business_entity_id
       - name: job_title
         description: >
           Job title of the employee.

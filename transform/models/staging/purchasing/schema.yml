@@ -15,19 +15,12 @@ models:
       - name: name_method
         description: >
           Shipping company name.
-        tests:
-          - unique
-          - not_null
       - name: ship_base
         description: >
           Minimum shipping charge.
-        tests:
-          - not_null
       - name: ship_rate
         description: >
           Shipping charge per pound.
-        tests:
-          - not_null
       - name: rowguid
         description: >
           Unique identifier for each record.

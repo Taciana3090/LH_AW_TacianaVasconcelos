@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: dim_client
+    description: >
+      This model contains the client information, which includes the customer details, person type, 
+      store name, territory, and the full name of the contact person associated with the customer. 
+      The customer key (customer_sk) is generated using the surrogate key function, and only the 
+      first row per customer is selected.
+      
+    columns:
+      - name: customer_sk
+        description: >
+          The surrogate key generated for the customer. It uniquely identifies each customer in the model.
+        tests:
+          - unique
+          - not_null       
+      - name: customer_id
+        description: >
+          The unique identifier of the customer, as provided by the 'stg_aw__customer' source table.          
+      - name: person_id
+        description: >
+          The identifier for the person associated with the customer, sourced from the 'stg_aw__customer' 
+          table.     
+      - name: store_name
+        description: >
+          The name of the store associated with the customer. If not provided, it defaults to 'not informed'.         
+      - name: store_id
+        description: >
+          The unique identifier for the store. If not provided, it defaults to 0.         
+      - name: territory_id
+        description: >
+          The identifier for the territory associated with the customer.     
+      - name: full_name
+        description: >
+          The full name of the contact person associated with the customer, concatenated from the first 
+          and last name in the 'stg_aw__person' source table.
+      - name: row_number
+        description: >
+          A row number that is generated for each customer, ordered by the customer_id and partitioned by 
+          the customer_id. This ensures that only one row per customer is selected.

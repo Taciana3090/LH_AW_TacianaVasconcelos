@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: dim_item
+    description: >
+      This model creates a dimension table for items by joining product details with sales order details. 
+      It ensures that each product is uniquely identified and assigns a surrogate key. 
+      The model selects distinct products that have been included in sales orders, 
+      enriches them with detailed product information, and includes a color attribute for each product.
+      
+    columns:
+      - name: dim_item_sk
+        description: >
+          Surrogate key generated for the dimension item table, uniquely identifying each product entry.
+        tests:
+          - unique
+          - not_null
+      - name: product_id
+        description: >
+          Unique identifier for the product from the source data.
+      - name: product_name
+        description: >
+          The name of the product as recorded in the source data.
+      - name: standard_cost
+        description: >
+          The standard cost of the product, used for cost calculations.
+      - name: listprice
+        description: >
+          The list price of the product, representing the retail price.
+      - name: name_product_subcategory
+        description: >
+          The subcategory to which the product belongs, aiding in categorization.
+      - name: name_product_category
+        description: >
+          The main category of the product, providing a broader classification.
+      - name: color
+        description: >
+          The color of the product, as specified in the product details.
+      - name: row_number
+        description: >
+          Row number assigned to each product to ensure unique selection, used to handle duplicate product entries.

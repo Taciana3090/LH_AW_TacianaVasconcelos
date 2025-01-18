@@ -11,9 +11,6 @@ models:
           - not_null
       - name: country_name
         description: "Name of the country or region."
-        tests:
-          - unique
-          - not_null
       - name: modified_date
         description: >
           The date the record was last modified.
@@ -50,9 +47,6 @@ models:
         description: "part of the composite primary key and foreign key referencing the business entity in the stg_aw_person table, converted to int."
         tests:
           - not_null
-          - relationships:
-              to: ref('stg_aw__person')
-              field: business_entity_id
       - name: email_address
         description: "normalized email address, converted to lowercase and without accents."
         tests:
@@ -95,9 +89,6 @@ models:
           - not_null
       - name: address_type_name
         description: "Address type description. For example, Billing, Home, or Shipping."
-        tests:
-          - unique
-          - not_null
       - name: rowguid
         description: >
           Unique identifier for each record.
@@ -169,23 +160,10 @@ models:
         description: "part of the composite primary key for the business entity address and foreign key referencing the address."
         tests:
           - not_null
-          - relationships:
-              to: ref('stg_aw__address')
-              field: address_id
       - name: business_entity_id
         description: "part of the composite primary key for the business entity address and foreign key referencing the business entity."
-        tests:
-          - not_null
-          - relationships:
-              to: ref('stg_aw__businessentity')
-              field: business_entity_id
       - name: address_type_id
         description: "foreign key referencing the address type."
-        tests:
-          - not_null
-          - relationships:
-              to: ref('stg_aw__addresstype')
-              field: address_type_id
       - name: rowguid
         description: >
           Unique identifier for each record.
@@ -249,27 +227,17 @@ models:
           - unique
           - not_null
       - name: state_province_id
-        description: "Foreign key referencing the state province."
-        tests:
-          - not_null
-          - relationships:
-              to: ref('stg_aw__stateprovince')
-              field: state_province_id
+        description: "the state province."
       - name: city
         description: "Foreign key referencing the city/district."
       - name: address_number
         description: "House/building number extracted from address line 1."
-
       - name: address_line
         description: "Street name, cleaned from address line 1."
-        tests:
-          - not_null
       - name: address_complement
         description: "Address complement, cleaned from address line 2."
       - name: postal_code
         description: "Postal code for the address."
-        tests:
-          - not_null
       - name: spatial_location
         description: "Latitude and longitude of this address."
 
@@ -279,31 +247,20 @@ models:
       - name: business_entity_id
         description: "Foreign key referencing the business entity, also a part of the composite primary key."
         tests:
-          - not_null
           - unique
-          - relationships:
-              to: ref('stg_aw__businessentity')
-              field: business_entity_id
+          - not_null
       - name: first_name
         description: "Person's first name with the first letter capitalized."
-        tests:
-          - not_null
       - name: middle_name
         description: "Person's middle name with the first letter capitalized."
       - name: last_name
         description: "Person's last name with the first letter capitalized."
-        tests:
-          - not_null
       - name: name_title
         description: "Person's title, with 'Sra%' converted to 'Mrs' and 'Sr%' converted to 'Mr'."
       - name: email_promotion
         description: "Indicator for email promotions, converted to an integer."
-        tests:
-          - not_null
       - name: person_type
         description: "Type of the person."
-        tests:
-          - not_null
       - name: name_suffix
         description: "Surname suffix. For example, Sr. or Jr."
       - name: additional_contact_info

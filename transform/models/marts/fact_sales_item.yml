@@ -1,0 +1,94 @@
+version: 2
+
+models:
+  - name: fact_sales_item
+    description: >
+      This model represents sales data with generated surrogate keys for various dimensions, 
+      providing a comprehensive view of each sales transaction.
+    columns:
+      - name: sales_id_sk
+        description: >
+          Surrogate key for sales, uniquely identifying each sales transaction in the table.
+        tests:
+         - unique
+         - not_null
+      - name: sales_person_id_fk
+        description: >
+          Foreign key linking to the sales person dimension, identifying the salesperson 
+          associated with each sale.
+        tests:
+         - not_null
+      - name: dim_item_fk
+        description: >
+          Foreign key linking to the item dimension, representing the product sold in the transaction.
+        tests:
+          - relationships:
+              to: ref('dim_item')
+              field: dim_item_sk
+      - name: dim_client_fk
+        description: >
+          Foreign key linking to the client dimension, identifying the customer involved in the sale.
+        tests:
+         - relationships:
+              to: ref('dim_client')
+              field: customer_sk
+      - name: dim_location_fk
+        description: >
+          Foreign key linking to the location dimension, representing the ship-to address for the sale.
+        tests:
+         - relationships:
+              to: ref('dim_location')
+              field: shiptoaddress_sk
+      - name: dim_creditcard_fk
+        description: >
+          Foreign key linking to the credit card dimension, used for identifying the credit card used in the transaction.
+        tests:
+         - relationships:
+              to: ref('dim_creditcard')
+              field: creditcard_sk
+      - name: dim_salesreason_fk
+        description: >
+          Foreign key linking to the sales reason dimension, categorizing the reason for the sale.
+      - name: order_date
+        description: >
+          The date on which the sales order was placed, useful for tracking and analyzing sales over time.
+      - name: online_order
+        description: >
+          Indicates whether the order was placed online, providing insights into sales channels.
+      - name: carrier_tracking_number
+        description: >
+          The tracking number for the carrier delivering the order, used for shipment tracking.
+      - name: paid_with_credit_card
+        description: >
+          A flag indicating if the order was paid with a credit card, aiding in payment method analysis.
+      - name: status
+        description: >
+          The current status of the sales order, providing information about the order's lifecycle.
+      - name: order_quantity
+        description: >
+          The quantity of items ordered in the transaction, used for analyzing sales volume.
+      - name: unit_price
+        description: >
+          The price per unit of the item sold, crucial for calculating total sales and revenue.
+      - name: unit_price_discount
+        description: >
+          The discount applied to the unit price, if any, for analyzing promotional impacts on sales.
+      - name: sub_total_fixed
+        description: >
+          The subtotal of the order before taxes and additional fees, used in financial analysis.
+      - name: total_gross
+        description: >
+          The total gross amount for the order, representing the total revenue generated from the sale.
+      - name: freight_fixed
+        description: >
+          The fixed freight cost for the order, relevant for analyzing shipping expenses.
+      - name: tax_fixed
+        description: >
+          The fixed tax amount applied to the order, used for financial and tax reporting.
+      - name: total_due_fixed
+        description: >
+          The total amount due for the order, encompassing all costs including tax and freight.
+      - name: row_number
+        description: >
+          A row number used to ensure unique identification and selection of records, especially 
+          in deduplication processes.

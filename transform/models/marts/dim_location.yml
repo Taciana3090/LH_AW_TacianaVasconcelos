@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: dim_location
+    description: >
+      This model provides a dimension table for locations, including details about addresses, 
+      cities, states, and countries, linked to sales orders.
+    columns:
+      - name: shiptoaddress_sk
+        description: >
+          Surrogate key for the ship-to address, uniquely identifying each location 
+          in the dimensional table.
+        tests:
+          - unique
+          - not_null
+      - name: ship_to_address_id
+        description: >
+          The original address ID used in the source system to reference the ship-to address 
+          for sales orders.
+      - name: address_line
+        description: >
+          The specific street address line for the location, providing detailed address 
+          information.
+      - name: city
+        description: >
+          The city where the address is located, used for geographic and demographic analysis.
+      - name: postal_code
+        description: >
+          The postal or ZIP code of the location, useful for regional sorting and mailing purposes.
+      - name: state_province_name
+        description: >
+          The name of the state or province where the address is located, providing regional 
+          context for the location.
+      - name: country_name
+        description: >
+          The name of the country where the address is located, enabling analysis at the 
+          country level.
+      - name: row_number
+        description: >
+          Row number used to ensure only the top-ranked row is retained for each address, 
+          deduplicating records.

@@ -26,7 +26,6 @@
                 when onlineorderflag = 'f' then false
                 else null
             end as online_order_flag
-                /* financials */
             , subtotal as sub_total
             , taxamt as taxa_amount
             , freight

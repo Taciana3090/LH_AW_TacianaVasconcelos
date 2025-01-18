@@ -26,6 +26,20 @@ with
         from {{ ref('stg_aw__countryregion') }}
     )
 
+    , salesterritory as (
+        select
+            territory_id
+            , countryregion_code
+            , territory_name
+            , territory_group
+            , sales_year_to_end
+            , sales_last_year
+            , cost_year_to_end
+            , cost_last_year
+        from {{ref('stg_aw__salesterritory')}}
+
+    )
+
     , int_location_performance as (
         select
             a.address_id
@@ -41,6 +55,7 @@ with
         from address a
         left join stateprovince sp on a.state_province_id = sp.state_province_id
         left join countryregion cr on sp.countryregion_code = cr.countryregion_code
+        left join salesterritory st on sp.sales_territory_id = st.territory_id
     )
 
 select *
