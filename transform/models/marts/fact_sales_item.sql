@@ -1,7 +1,7 @@
 with 
     int_sales as (
         select
-            sales_order_id
+             sales_order_id
             , sales_order_detail_id
             , customer_id
             , order_date
@@ -31,7 +31,7 @@ with
 
     , sales_with_sk as (
         select
-            {{ dbt_utils.generate_surrogate_key(['sales_order_id','sales_order_detail_id']) }} as sales_id_sk
+             {{ dbt_utils.generate_surrogate_key(['sales_order_id', 'sales_order_detail_id']) }} as sales_id_sk
             , {{ dbt_utils.generate_surrogate_key(['sales_person_id']) }} as sales_person_id_fk
             , {{ dbt_utils.generate_surrogate_key(['product_id']) }} as dim_item_fk
             , {{ dbt_utils.generate_surrogate_key(['customer_id']) }} as dim_client_fk
@@ -39,7 +39,7 @@ with
             , {{ dbt_utils.generate_surrogate_key(['credit_card_id']) }} as dim_creditcard_fk
             , {{ dbt_utils.generate_surrogate_key(['reason_type']) }} as dim_salesreason_fk
             , order_date
-            , online_order 
+            , online_order
             , carrier_tracking_number
             , paid_with_credit_card
             , status
@@ -56,5 +56,14 @@ with
         qualify row_number = 1
     )
 
+    , sales_with_date_sk as (
+        select
+             s.*
+            , d.date_sk as dim_date_fk
+        from sales_with_sk s
+        left join {{ ref('dim_date') }} d
+            on s.order_date = d.metric_date
+    )
+
 select *
-from sales_with_sk
+from sales_with_date_sk

@@ -38,5 +38,17 @@ with
         from date_columns
     )
 
+    , data_dim as (
+        select
+            {{ dbt_utils.generate_surrogate_key(['metric_date']) }} as date_sk
+            , metric_date
+            , day
+            , month
+            , year
+            , quarter
+            , fullmonth
+        from month_columns
+    )
+
 select *
-from month_columns
+from data_dim
