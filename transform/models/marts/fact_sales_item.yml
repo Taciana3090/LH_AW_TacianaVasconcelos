@@ -49,7 +49,6 @@ models:
       - name: dim_salesreason_fk
         description: >
           Foreign key linking to the sales reason dimension, categorizing the reason for the sale.
-      - name: 
       - name: order_date
         description: >
           The date on which the sales order was placed, useful for tracking and analyzing sales over time.

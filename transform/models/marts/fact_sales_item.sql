@@ -39,6 +39,8 @@ with
             , {{ dbt_utils.generate_surrogate_key(['credit_card_id']) }} as dim_creditcard_fk
             , {{ dbt_utils.generate_surrogate_key(['reason_type']) }} as dim_salesreason_fk
             , order_date
+            , sales_order_id
+            , sales_order_detail_id
             , online_order
             , carrier_tracking_number
             , paid_with_credit_card
