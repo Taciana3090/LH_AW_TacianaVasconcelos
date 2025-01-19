@@ -30,6 +30,8 @@ sources:
       - name: productmodel
       - name: productsubcategory
       - name: unitmeasure
+      - name: productinventory
+      - name: billofmaterials
 
   - name: db_aw_purchasing
     database: RAW_AW

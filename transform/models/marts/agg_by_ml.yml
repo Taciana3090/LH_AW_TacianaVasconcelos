@@ -1,0 +1,60 @@
+version: 2
+models:
+  - name: agg_by_ml
+    description: >
+      This model aggregates sales and product data, grouped by year and month, and includes various metrics such as sales, inventory, and components information.
+    columns:
+      - name: order_year
+        description: >
+          The year in which the order was placed.
+      - name: order_month
+        description: >
+          The month (start of the month) in which the order was placed.
+      - name: product_id
+        description: >
+          The unique identifier for the product.
+      - name: territory_name
+        description: >
+          The name of the sales territory.
+      - name: territory_group
+        description: >
+          The group of the sales territory.
+      - name: countryregion_code
+        description: >
+          The code for the country/region associated with the territory.
+      - name: store_name
+        description: >
+          The name of the store associated with the order, if applicable.
+      - name: product_name
+        description: >
+          The name of the product.
+      - name: name_product_category
+        description: >
+          The category of the product.
+      - name: name_product_subcategory
+        description: >
+          The subcategory of the product.
+      - name: total_inventory
+        description: >
+          The total available inventory for the product.
+      - name: total_orders
+        description: >
+          The total number of unique orders for the product.
+      - name: total_sales
+        description: >
+          The total sales amount for the product.
+      - name: avg_sales_per_order
+        description: >
+          The average sales amount per order for the product.
+      - name: min_sales
+        description: >
+          The minimum sales amount recorded for an order of the product.
+      - name: max_sales
+        description: >
+          The maximum sales amount recorded for an order of the product.
+      - name: components
+        description: >
+          A list of component IDs associated with the product.
+      - name: assembly_quantities
+        description: >
+          A list of assembly quantities associated with each component of the product.

@@ -271,3 +271,103 @@ models:
       - name: _sdc_sync_started_at
         description: >
           Timestamp when synchronization started.
+
+  - name: stg_aw__productinventory
+    description: >
+      This model extracts and transforms data from the `productinventory` source table. 
+      It includes information about product inventory levels, location details, and 
+      metadata for syncing and processing.
+    columns:
+      - name: product_id
+        description: >
+          The unique identifier for the product in the inventory.
+      - name: location_id
+        description: >
+          The unique identifier for the location where the product is stored.
+      - name: shelf
+        description: >
+          The shelf identifier for the product's storage location.
+      - name: bin
+        description: >
+          The bin number within the shelf for the product's storage.
+      - name: quantity
+        description: >
+          The quantity of the product available in the inventory at the specified location.
+      - name: rowguid
+        description: >
+          A globally unique identifier for the row, used for replication and tracking.
+      - name: modified_date
+        description: >
+          The date when the inventory data was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          The timestamp indicating when the row was extracted by the source connector.
+      - name: _sdc_received_at
+        description: >
+          The timestamp indicating when the row was received by the destination system.
+      - name: _sdc_batched_at
+        description: >
+          The timestamp when the row was batched for processing.
+      - name: _sdc_deleted_at
+        description: >
+          The timestamp indicating when the row was marked for deletion, if applicable.
+      - name: _sdc_sequence
+        description: >
+          A sequence number used for ordering rows in the replication process.
+      - name: _sdc_table_version
+        description: >
+          The version number of the source table schema used during the sync process.
+      - name: _sdc_sync_started_at
+        description: >
+          The timestamp when the sync process started for this row.
+
+  - name: stg_aw__billofmaterials
+    description: >
+      This model processes the Bill of Materials data from the `db_aw_production.billofmaterials` table, 
+      extracting and transforming relevant fields for downstream analysis. 
+      It includes details on product assemblies, components, and unit measures, 
+      along with metadata for synchronization and versioning.
+    columns:
+      - name: bill_of_materials_id
+        description: >
+          Unique identifier for the Bill of Materials entry.
+      - name: product_assembly_id
+        description: >
+          Identifier for the product assembly associated with this Bill of Materials.
+      - name: component_id
+        description: >
+          Identifier for the component item included in the assembly.
+      - name: unit_measure_code
+        description: >
+          Code representing the unit of measure for the component quantity.
+      - name: bom_level
+        description: >
+          The level of the Bill of Materials, indicating the hierarchy in the product assembly.
+      - name: per_assembly_quantity
+        description: >
+          Quantity of the component required per unit of the assembly.
+      - name: modified_date
+        description: >
+          Date when the Bill of Materials record was last modified.
+      - name: _sdc_extracted_at
+        description: >
+          Timestamp indicating when the record was extracted by the synchronization process.
+      - name: _sdc_received_at
+        description: >
+          Timestamp indicating when the record was received in the data pipeline.
+      - name: _sdc_batched_at
+        description: >
+          Timestamp indicating when the record was included in a batch for processing.
+      - name: _sdc_deleted_at
+        description: >
+          Timestamp indicating when the record was marked as deleted in the source system.
+      - name: _sdc_sequence
+        description: >
+          Sequence number representing the order of data synchronization.
+      - name: _sdc_table_version
+        description: >
+          Version number of the source table schema.
+      - name: _sdc_sync_started_at
+        description: >
+          Timestamp indicating the start of the synchronization process for this record.
+
