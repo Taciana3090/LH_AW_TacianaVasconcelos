@@ -9,8 +9,10 @@ with
             , st.territory_name
             , st.territory_group
             , st.countryregion_code
+            , s.business_entity_id as store_business_entity_id
             , s.store_name
             , p.product_name
+            , p.product_number
             , pc.name_product_category
             , ps.name_product_subcategory
             , coalesce(pi.quantity, 0) as available_inventory
@@ -25,8 +27,11 @@ with
             {{ ref('stg_aw__salesterritory') }} st
             on soh.territory_id = st.territory_id
         left join 
+            {{ ref('stg_aw__salesperson') }} sp
+            on soh.sales_person_id = sp.business_entity_id
+        left join 
             {{ ref('stg_aw__store') }} s
-            on soh.customer_id = s.business_entity_id
+            on sp.business_entity_id = s.sales_person_id
         left join 
             {{ ref('stg_aw__product') }} p
             on sod.product_id = p.product_id
@@ -54,6 +59,7 @@ with
             , bd.countryregion_code
             , bd.store_name
             , bd.product_name
+            , bd.product_number
             , bd.name_product_category
             , bd.name_product_subcategory
             , sum(bd.available_inventory) as total_inventory
@@ -75,9 +81,11 @@ with
             , bd.countryregion_code
             , bd.store_name
             , bd.product_name
+            , bd.product_number
             , bd.name_product_category
             , bd.name_product_subcategory
     )
 
 select *
 from aggregated_data
+where store_name is not null
